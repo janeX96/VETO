@@ -25,4 +25,6 @@ public interface PetRepository {
     List<Pet> findByName(@Param("name")String name);
 
     void deletePetById(int id);
+
+    boolean existsByName(String name);
 }

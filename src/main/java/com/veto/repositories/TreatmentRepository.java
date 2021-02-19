@@ -22,6 +22,8 @@ public interface TreatmentRepository {
 
     void deleteTreatmentById(int id);
 
+    boolean existsByDescription(String description);
+
 
    // List<Treatment> findByName(@Param("name")String name);
 }
