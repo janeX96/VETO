@@ -3,9 +3,11 @@ package com.veto.controller;
 import com.veto.DTO.PetReadModel;
 import com.veto.Services.PetService;
 import com.veto.model.Pet;
+import com.veto.repositories.PetRepository;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,10 +22,14 @@ import java.util.List;
 public class PetController {
 
     public static final Logger logger = LoggerFactory.getLogger(PetController.class);
+    private final ApplicationEventPublisher eventPublisher;
     private final PetService service;
+    private final PetRepository repository;
 
-    public PetController(PetService service) {
+    public PetController(ApplicationEventPublisher eventPublisher, PetService service, PetRepository repository) {
+        this.eventPublisher = eventPublisher;
         this.service = service;
+        this.repository = repository;
     }
 
     @GetMapping("/pets")
@@ -100,7 +106,8 @@ public class PetController {
         }
         else
             try {
-                service.updatePet(id,updateFrom);
+                service.updatePet(id,updateFrom,eventPublisher);
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 bindingResult.rejectValue("ownerPhoneNumber","error.user", "Podany numer telefonu jest już używany");

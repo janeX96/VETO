@@ -1,9 +1,11 @@
 package com.veto.Services;
 
 import com.veto.DTO.PetReadModel;
+import com.veto.event.PetEvent;
 import com.veto.model.Pet;
 import com.veto.repositories.PetRepository;
 import javassist.NotFoundException;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,13 +41,13 @@ public class PetService {
         return new PetReadModel(repository.save(pet));
     }
 
-    public void updatePet(int id, Pet pet) throws Exception {
+    public void updatePet(int id, Pet pet, ApplicationEventPublisher eventPublisher) throws Exception {
         if (repository.existsByOwnerPhoneNumber(pet.getOwnerPhoneNumber()) && !pet.getOwnerPhoneNumber().equals(repository.findById(id).get().getOwnerPhoneNumber()))
             throw new Exception("Podany numer telefonu jest już używany");
 
         repository.findById(id).ifPresent(p->
         {
-            p.updateFrom(pet);
+            eventPublisher.publishEvent(p.updateFrom(pet));
             repository.save(p);
         });
     }

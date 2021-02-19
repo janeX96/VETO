@@ -1,5 +1,7 @@
 package com.veto.model;
 
+import com.veto.event.PetEvent;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -101,12 +103,16 @@ public class Pet {
         this.treatments = treatments;
     }
 
-    public void updateFrom(Pet source)
+    public PetEvent updateFrom(Pet source)
     {
+        boolean phoneChanged = !this.getOwnerPhoneNumber().equals(source.getOwnerPhoneNumber());
+
         this.name=source.getName();
         this.type=source.getType();
         this.ownerFirstName=source.getOwnerFirstName();
         this.ownerLastName=source.getOwnerLastName();
         this.ownerPhoneNumber=source.getOwnerPhoneNumber();
+
+        return PetEvent.changed(this,phoneChanged);
     }
 }
