@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link rel="stylesheet" href="css\style.css" />
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Szczegóły weterynarza</h2>
+    <form class="form">
+
+
+    <label for="firstName">Imię:</label>
+    <input type="text" name="firstName" id="firstName" th:value="${vet.getFirstName()}" disabled/>
+    <span id="errorFirstName" class="errors-text"></span>
+
+        <label for="lastName"> Nazwisko:</label>
+        <input type="text" name="lastName" th:value="${vet.getLastName()}" id="lastName" disabled />
+        <span id="errorLastName" class="errors-text"></span>
+
+        <label for="email">Email:</label>
+       <input type="text" name="email" th:value="${vet.getEmail()}" id="email" disabled />
+        <span id="errorEmail" class="errors-text"></span>
+
+        <a th:href="${'vets/edit/'+vet.getId()}" class="form-button-edit">Edytuj</a>
+    </form>
+    <h2>Zabiegi</h2>
+    <table class="table-list" >
+        <thead>
+        <tr>
+            <th>Zabieg</th>
+            <th>Zwierzak</th>
+            <th>Data</th>
+        </tr>
+        </thead>
+        <tbody th:each="treatment : ${vet.treatments}">
+        <tr>
+            <td>
+                <a th:href="${'treatment-details?id='+treatment.getId()}" th:text="${treatment.getDescription()}"/>
+            </td>
+            <td>
+            <a th:href="${'pet-details?id='+treatment.getPet().getId()}" th:text="${treatment.getPet().getName()} + ' (' + ${treatment.getPet().getOwnerLastName()} + ')'"/>
+            </td>
+            <td th:text="${treatment.toReadModel().getFormattedDate()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-buttons">
+        <a href="/vets" class="button-return">Powrót</a>
+    </div>
+</main>
+
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

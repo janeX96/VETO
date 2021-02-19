@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
+    <script type="application/javascript" th:src="@{/js/validationPetForm.js}"></script>
+
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="../../images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="../../index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Edycja zwierzaka</h2>
+    <form class="form" th:object="${pet}" th:action="@{/pets/update/{id}(id=${pet.id})}" method="post" novalidate onsubmit="return validateForm();">
+
+        <label for="name">Imię:<abbr>*</abbr></label>
+        <input th:if="${#fields.hasErrors('name')!=true}" type="text" name="name" id="name" placeholder="2-30 znaków" th:field="*{name}"/>
+        <input th:if="${#fields.hasErrors('name')}" class="error-input" type="text" name="name" id="name1" placeholder="2-30 znaków" th:field="*{name}"/>
+        <span id="errorName" class="errors-text" th:if="${#fields.hasErrors('name')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <label for="type">Typ:<abbr>*</abbr></label>
+        <input th:if="${#fields.hasErrors('type')!=true}" type="text" name="type" id="type" placeholder="3-60 znaków" th:field="*{type}"/>
+        <input th:if="${#fields.hasErrors('type')}" class="error-input" type="text" name="type" id="type1" placeholder="3-60 znaków" th:field="*{type}"/>
+        <span id="errorType" class="errors-text" th:if="${#fields.hasErrors('type')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+
+        <label for="ownerFirstName">Imię właściciela:<abbr>*</abbr></label>
+        <input th:if="${#fields.hasErrors('ownerFirstName')!=true}" type="text" name="ownerFirstName" id="ownerFirstName" placeholder="2-30 znaków" th:field="*{ownerFirstName}"/>
+        <input th:if="${#fields.hasErrors('ownerFirstName')}" class="error-input" type="text" name="ownerFirstName" id="ownerFirstName1" placeholder="2-30 znaków" th:field="*{ownerFirstName}"/>
+        <span id="errorOwnerFirstName" class="errors-text" th:if="${#fields.hasErrors('ownerFirstName')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('ownerFirstName')}" th:errors="*{ownerFirstName}"></span>
+
+        <label for="ownerLastName">Nazwisko wł.:<abbr>*</abbr></label>
+        <input th:if="${#fields.hasErrors('ownerLastName')!=true}" type="text" name="ownerLastName" id="ownerLastName" placeholder="2-60 znaków" th:field="*{ownerLastName}"/>
+        <input th:if="${#fields.hasErrors('ownerLastName')}" class="error-input" type="text" name="ownerLastName" id="ownerLastName1" placeholder="2-60 znaków" th:field="*{ownerLastName}"/>
+        <span id="errorOwnerLastName" class="errors-text" th:if="${#fields.hasErrors('ownerLastName')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('ownerLastName')}" th:errors="*{ownerLastName}"></span>
+
+        <label for="phone">Nr telefonu:<abbr>*</abbr></label>
+        <input th:if="${#fields.hasErrors('ownerPhoneNumber')!=true}" type="text" name="phone" id="phone" placeholder="123456789" th:field="*{ownerPhoneNumber}"/>
+        <input th:if="${#fields.hasErrors('ownerPhoneNumber')}" class="error-input" type="text" name="phone" id="phone1" placeholder="123456789" th:field="*{ownerPhoneNumber}"/>
+        <span id="errorPhone" class="errors-text" th:if="${#fields.hasErrors('ownerPhoneNumber')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('ownerPhoneNumber')}" th:errors="*{ownerPhoneNumber}"></span>
+
+
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+            <input type="submit" class="form-button-submit" value="Zapisz"/>
+            <a th:href="${'/pet-details?id='+pet.getId()}" class="form-button-cancel">Anuluj</a>
+        </div>
+    </form>
+</main>
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

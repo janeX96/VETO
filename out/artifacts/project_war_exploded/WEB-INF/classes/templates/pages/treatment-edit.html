@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
+    <script type="application/javascript" th:src="@{/js/validationTreatmentForm.js}"></script>
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Edycja zabiegu</h2>
+    <form class="form" th:object="${treatment}" th:action="@{/treatments/update/{id}(id=${treatment.id})}" method="post" novalidate onsubmit="return validateForm();">
+
+        <label for="petId">Zwierzak:</label>
+        <select name="petId" id=petId th:field="*{petId}">
+            <option th:each="pet : ${pets}" th:value="${pet.getId()}"
+                    th:text="${pet.getName()}">
+        </select>
+        <span id="errorPetId" class="errors-text"></span>
+
+
+            <label for="vetId">Weterynarz:</label>
+        <select name="vetId" id=vetId th:field="*{vetId}">
+            <option th:each="vet : ${vets}" th:value="${vet.getId()}"
+                    th:text="${vet.getFirstName()} + ' ' + ${vet.getLastName()}">
+        </select>
+        <span id="errorVetId" class="errors-text"></span>
+
+
+        <label for="treatmentId">Rodzaj zabiegu:<sup>*</sup></label>
+        <input type="text" name="description" id="treatmentId" th:value="${treatment.getDescription()}" />
+        <span id="errorTreatmentId" class="errors-text"></span>
+
+        <!--            <label for="treatmentId">Rodzaj zabiegu:<sup>*</sup></label>-->
+<!--        <input th:if="${#fields.hasErrors('treatmentId')!=true}" type="text" name="description" id="treatmentId" placeholder="2-60 znaków" th:field="*{description}"/>-->
+<!--        <input th:if="${#fields.hasErrors('treatmentId')}" class="error-input" type="text" name="description" id="treatmentId1" placeholder="2-30 znaków" th:field="*{description}"/>-->
+<!--        <span id="errorTreatmentId" style="color:red" class="errors-text" th:if="${#fields.hasErrors('treatmentId')!=true}" th:value="${default}"></span>-->
+<!--        <span class="errors-text" style="color:red" th:if="${#fields.hasErrors('treatmentId')}" th:errors="*{description}"></span>-->
+
+
+            <label for="date">Data zabiegu:<sup>*</sup></label>
+            <input type="datetime-local" name="date" id="date" th:value="${treatment.getDate()}" />
+        <span id="errorDate" class="errors-text"></span>
+
+        </div>
+        <div class="form-buttons">
+            <input type="submit" class="form-button-submit" value="Zapisz"/>
+            <p id="errorsSummary" class="errors-text"></p>
+            <a th:href="${'/treatment-details?id='+treatment.getId()}" class="form-button-cancel">Anuluj</a>
+        </div>
+
+    </form>
+</main>
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

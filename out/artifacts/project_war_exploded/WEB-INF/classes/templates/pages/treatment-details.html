@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link rel="stylesheet" href="css\style.css" />
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Szczegóły zabiegu</h2>
+    <form class="form">
+
+        <label for="petName"><a th:href="${'pet-details?id='+treatment.getPet().getId()}">Zwierzak:</a></label>
+
+        <input type="text" name="petName" id="petName" disabled th:value="${treatment.getPet().getName()} +
+        ' (p. ' + ${treatment.getPet().getOwnerLastName()} + ')'"/>
+        <span id="errorPetName" class="errors-text"></span>
+
+
+        <label for="vetLastName"> <a th:href="${'vet-details?id='+treatment.getVet().getId()}">Weterynarz:</a></label>
+       <input type="text" name="vetLastName" th:value="${treatment.getVet().getFirstName()}
+       + ' ' + ${treatment.getVet().getLastName()}" id="vetLastName" disabled />
+        <span id="errorVetLastName" class="errors-text"></span>
+
+        <label for="treatmentId">Rodzaj zabiegu:<sup>*</sup></label>
+        <input type="text" name="description" id="treatmentId" th:value="${treatment.getDescription()}" disabled />
+        <span id="errorTreatmentId" class="errors-text"></span>
+
+        <label for="date">Data zabiegu:<sup>*</sup></label>
+        <input type="datetime-local" name="date" id="date" th:value="${treatment.getDate()}" disabled />
+        <span id="errorDate" class="errors-text"></span>
+
+       <a th:href="${'treatments/edit/'+treatment.getId()}" class="form-button-edit">Edytuj</a>
+    </form>
+    <div class="form-buttons">
+        <a href="/treatments" class="button-return">Powrót</a>
+    </div>
+</main>
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

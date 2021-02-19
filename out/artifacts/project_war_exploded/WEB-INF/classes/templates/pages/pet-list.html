@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link rel="stylesheet" href="css\style.css" />
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Lista zwierzaków</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Typ</th>
+            <th>Właściciel</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody th:each="pet : ${pets}">
+        <tr>
+            <td th:text="${pet.getName()}"></td>
+            <td th:text="${pet.getType()}"></td>
+            <td th:text="${pet.getOwnerLastName()}"></td>
+            <td>
+                <ul class="table-list-actions">
+                    <li>
+                        <a th:href="${'pet-details?id='+pet.getId()}" class="list-actions-button-details">Szczegóły</a>
+                    </li>
+                    <li>
+                        <a th:href="${'pets/edit/'+pet.getId()}" class="list-actions-button-edit">Edytuj</a>
+                    </li>
+                    <li>
+                        <a href="" class="list-actions-button-delete">Usuń</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <p><a href="/addpet" class="button-add">Dodaj nowego zwierzaka</a></p>
+</main>
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

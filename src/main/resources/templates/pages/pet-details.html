@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link rel="stylesheet" href="css\style.css" />
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Szczegóły zwierzaka</h2>
+    <form class="form">
+
+        <label for="name">Imię:</label>
+        <input type="text" name="name" th:value="${pet.getName()}" id="name" disabled />
+        <span id="errorName" class="errors-text"></span>
+
+        <label for="type">Typ:</label>
+        <input type="text" name="type" th:value="${pet.getType()}" id="type" disabled />
+        <span id="errorType" class="errors-text"></span>
+
+        <label for="ownerFirstName">Imię właściciela:</label>
+        <input type="text" name="ownerFirstName" th:value="${pet.getOwnerFirstName()}" id="ownerFirstName" disabled />
+        <span id="errorOwnerFirstName" class="errors-text"></span>
+
+        <label for="ownerLastName">Nazwisko wł.:</label>
+        <input type="text" name="ownerLastName" th:value="${pet.getOwnerLastName()}" id="ownerLastName" disabled />
+        <span id="errorOwnerLastName" class="errors-text"></span>
+
+        <label for="phone">Nr telefonu:</label>
+        <input type="text" name="phone" th:value="${pet.getOwnerPhoneNumber()}" id="phone" disabled />
+        <span id="errorPhone" class="errors-text"></span>
+
+        <a th:href="${'pets/edit/'+pet.getId()}" class="form-button-edit">Edytuj</a>
+    </form>
+    <h2>Zabiegi</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Zabieg</th>
+            <th>Weterynarz</th>
+            <th>Data</th>
+        </tr>
+        </thead>
+        <tbody th:each="treatment : ${pet.treatments}">
+        <tr>
+            <td>
+                <a th:href="${'treatment-details?id='+treatment.getId()}" th:text="${treatment.getDescription()}"/>
+            </td>
+            <td>
+                <a th:href="${'vet-details?id='+treatment.getVet().getId()}" th:text="${treatment.getVet().getFirstName()} + ' ' + ${treatment.getVet().getLastName()}"/>
+            </td>
+            <td th:text="${treatment.toReadModel().getFormattedDate()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-buttons">
+    <a th:href="${'/pets'}" class="button-return">Powrót</a>
+        </div>
+</main>
+
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

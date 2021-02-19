@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
+    <script type="application/javascript" th:src="@{/js/validationTreatmentForm.js}"></script>
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="../../images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="../../index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Edycja zabiegu</h2>
+    <form class="form" th:object="${treatment}" th:action="@{/treatments/update/{id}(id=${treatment.id})}" method="post" novalidate onsubmit="return validateForm();">
+        <label for="pet">Zwierzak:<sup>*</sup></label>
+        <select name="pet" id=pet th:field="*{pet}">
+            <option value="-1" selected="selected"></option>
+            <option th:each="pet : ${pets}" th:value="${pet.id}"
+                    th:text="${pet.getName()} + ' (' + ${pet.getOwnerLastName()} + ')'">
+        </select>
+        <span id="errorPet" class="errors-text" th:if="${#fields.hasErrors('pet')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('pet')}" th:errors="*{pet}"></span>
+        <!--        <span id="errorPet" class="errors-text"></span>-->
+
+
+        <label for="vet">Weterynarz:<sup>*</sup></label>
+        <select name="vet" id=vet th:field="*{vet}">
+            <option value="-1" selected="selected"></option>
+            <option th:each="vet : ${vets}" th:value="${vet.id}"
+                    th:text="${vet.getFirstName()} + ' ' + ${vet.getLastName()}">
+        </select>
+        <span id="errorVet" class="errors-text" th:if="${#fields.hasErrors('vet')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('vet')}" th:errors="*{vet}"></span>
+        <!--        <span id="errorVet" class="errors-text"></span>-->
+
+
+        <!--        <label for="treatmentId">Rodzaj zabiegu:<abbr>*</abbr></label>-->
+        <!--        <input type="text" name="description" id="treatmentId" />-->
+        <!--        <span id="errorTreatmentId" class="errors-text"></span>-->
+
+
+        <label for="description">Rodzaj zabiegu:<sup>*</sup></label>
+        <input th:if="${#fields.hasErrors('description')!=true}" type="text" name="description" id="description" placeholder="5-60 znaków" th:field="*{description}"/>
+        <input th:if="${#fields.hasErrors('description')}" class="error-input" type="text" name="description" id="description1" placeholder="5-60 znaków" th:field="*{description}"/>
+        <span id="errorDescription" class="errors-text" th:if="${#fields.hasErrors('description')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+        <label for="date">Data zabiegu:<abbr>*</abbr></label>
+<!--        <input type="datetime-local" name="date" id="date" />-->
+        <input th:if="${#fields.hasErrors('date')!=true}" type="datetime-local" name="date" id="date" th:field="*{date}"/>
+        <input th:if="${#fields.hasErrors('date')}" class="error-input" type="datetime-local" name="date" id="date1"  th:field="*{date}"/>
+        <span id="errorDate" class="errors-text" th:if="${#fields.hasErrors('date')!=true}" th:value="${default}"></span>
+        <span class="errors-text" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+
+
+        </div>
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+            <input type="submit" class="form-button-submit" value="Zapisz"/>
+            <a th:href="${'/treatment-details?id='+treatment.getId()}" class="form-button-cancel">Anuluj</a>
+        </div>
+
+    </form>
+</main>
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

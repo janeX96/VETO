@@ -1,0 +1,10 @@
+spring:
+  h2:
+   console:
+     enabled: true
+     path: '/console'
+  datasource:
+     url: 'jdbc:h2:file:C:/Users/janek/OneDrive/VETO- project/TIN_Veto_project/veto-db'
+  jpa:
+    hibernate:
+      ddl-auto: validate

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veto e-Weterynaria</title>
+    <link rel="stylesheet" href="css\style.css" />
+    <script type="application/javascript" src="js\validationCommon.js"></script>
+    <script type="application/javascript" src="js\validationVetForm.js"></script>
+    <script>
+        var gfg = document.getElementById("firstName");
+        gfg.onchange = function (e) {
+            if (gfg.value == "") {
+                e.target.style.border
+                    = "1px solid #7f8c8d;";
+            }
+        };
+    </script>
+</head>
+<body>
+<header>
+    <div> <h1 style="font-size:40px">Veto</h1>
+        <p style="font-size:20px">e-Weterynaria</p>
+    </div>
+    <img src="images/logo2.png" alt="Veto Logo" style="width:150px;height:150px">
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html" class="myButton">Strona główna</a></li>
+        <li><a href="/vets" class="myButton">Weterynarze</a></li>
+        <li><a href="/treatments" class="myButton">Zabiegi</a></li>
+        <li><a href="/pets" class="myButton">Zwierzaki</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Dodawanie nowego weterynarza</h2>
+    <form class="form" th:object="${vet}" th:action="@{/vets}" method="post" novalidate onsubmit="return validateForm();">
+
+            <label for="firstName">Imię:<abbr>*</abbr></label>
+            <input th:if="${#fields.hasErrors('firstName')!=true}" type="text" name="firstName" id="firstName" placeholder="2-30 znaków" th:field="*{firstName}"/>
+            <input th:if="${#fields.hasErrors('firstName')}" class="error-input" type="text" name="firstName" id="firstName1" placeholder="2-30 znaków" th:field="*{firstName}"/>
+            <span id="errorFirstName" class="errors-text" th:if="${#fields.hasErrors('firstName')!=true}" th:value="${default}"></span>
+            <span class="errors-text" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+
+
+            <label for="lastName">Nazwisko:<abbr>*</abbr></label>
+            <input th:if="${#fields.hasErrors('lastName')!=true}" type="text" name="lastName" id="lastName" placeholder="2-60 znaków" th:field="*{lastName}"/>
+            <input th:if="${#fields.hasErrors('lastName')}" class="error-input" type="text" name="lastName" id="lastName1" placeholder="2-60 znaków" th:field="*{lastName}"/>
+            <span id="errorLastName" class="errors-text" th:if="${#fields.hasErrors('lastName')!=true}" th:value="${default}"></span>
+            <span class="errors-text" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+
+
+            <label for="email">e-mail:<abbr>*</abbr></label>
+            <input th:if="${#fields.hasErrors('email')!=true}" type="text" name="email" id="email" placeholder="nazwa@domena.pl" th:field="*{email}"/>
+            <input th:if="${#fields.hasErrors('email')}" class="error-input" type="text" name="email" id="email1" placeholder="nazwa@domena.pl" th:field="*{email}"/>
+            <span id="errorEmail" class="errors-text" th:if="${#fields.hasErrors('email')!=true}" th:value="${default}"></span>
+            <span class="errors-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+           <input type="submit" class="form-button-submit" value="Dodaj"/>
+            <a href="/vets" class="form-button-cancel">Anuluj</a>
+        </div>
+    </form>
+</main>
+<footer>
+    Jan Klejn, s16503
+</footer>
+</body>
+</html>

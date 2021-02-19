@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: janek
+Build-Jdk: 15
+Implementation-Title: veto
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.veto
+Main-Class: ${start-class}
+
