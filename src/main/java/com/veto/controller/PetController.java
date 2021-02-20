@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class PetController {
         return "pages/index";
     }
 
+    @RolesAllowed({"ROLE_USER","ROLE_ADMIN"})
     @GetMapping("/pets")
     String readAllVets(Model model){
         logger.warn("Exposing all the pets!");

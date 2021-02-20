@@ -6,6 +6,7 @@ import com.veto.model.Vet;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class VetController {
         this.service = service;
     }
 
+    @RolesAllowed({"ROLE_USER","ROLE_ADMIN"})
     @GetMapping("/vets")
     String readAllVets(Model model){
         logger.warn("Exposing all the vets!");
@@ -50,6 +53,7 @@ public class VetController {
         return "pages/vet-form";
     }
 
+    @RolesAllowed({"ROLE_USER","ROLE_ADMIN"})
     @GetMapping("/vet-details")
     String getDetails(@RequestParam("id") int id, Model model){
         //logger.warn("Exposing all the vets!");
@@ -64,16 +68,16 @@ public class VetController {
         return "pages/vet-details";
     }
 
-
+    @Secured("ROLE_ADMIN")
     @GetMapping("/vets/edit/{id}")
     String editVet(@PathVariable int id, Model model, Authentication auth) throws NotFoundException{
-        if (auth.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))){
+       // if (auth.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))){
             Vet vet = service.findById(id);
             model.addAttribute("vet",vet);
             model.addAttribute("default","");
             return "pages/vet-edit";
-        }
-        return "pages/index";
+      //  }
+      //  return "pages/index";
     }
 
 

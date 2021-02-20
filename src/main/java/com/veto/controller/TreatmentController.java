@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.swing.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -38,6 +39,7 @@ public class TreatmentController {
         this.petService = petService;
     }
 
+    @RolesAllowed({"ROLE_USER","ROLE_ADMIN"})
     @GetMapping("/treatments")
    String readAllTreatments(Model model){
         logger.warn("Exposing all the vets!");
