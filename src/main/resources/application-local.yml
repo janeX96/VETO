@@ -8,9 +8,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-
-  keycloak:
-    auth-server-url: 'http://localhost:8180/auth'
-    ralm: 'Veto'
-    resource: 'veto-client'
-    public-client: true
+keycloak:
+  auth-server-url: 'http://localhost:8180/auth'
+  realm: 'Veto'
+  resource: 'veto-client'
+  public-client: true
