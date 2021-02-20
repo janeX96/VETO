@@ -42,8 +42,8 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
         http.authorizeRequests()
                 .antMatchers("/treatments","/vets","/pets","/treatment-details","/vet-details","/pet-details")
                 .hasRole("USER")
-                .antMatchers("/treatments/edit/*","/vets/edit/*","/pets/edit/*")
-                .hasRole("ADMIN")
+//                .antMatchers("/treatments/edit/*","/vets/edit/*","/pets/edit/*")
+//                .hasRole("ADMIN")
                 .anyRequest()
                 .permitAll();
 

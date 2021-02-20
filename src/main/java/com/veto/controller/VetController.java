@@ -6,6 +6,7 @@ import com.veto.model.Vet;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -65,11 +66,14 @@ public class VetController {
 
 
     @GetMapping("/vets/edit/{id}")
-    String editVet(@PathVariable int id, Model model) throws NotFoundException{
-        Vet vet = service.findById(id);
-        model.addAttribute("vet",vet);
-        model.addAttribute("default","");
-        return "pages/vet-edit";
+    String editVet(@PathVariable int id, Model model, Authentication auth) throws NotFoundException{
+        if (auth.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))){
+            Vet vet = service.findById(id);
+            model.addAttribute("vet",vet);
+            model.addAttribute("default","");
+            return "pages/vet-edit";
+        }
+        return "pages/index";
     }
 
 
