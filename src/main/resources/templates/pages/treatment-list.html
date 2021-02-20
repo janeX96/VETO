@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/">
+<html lang="pl-PL" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,10 +42,10 @@
                     <li>
                         <a th:href="${'treatment-details?id='+treatment.getId()}" class="list-actions-button-details">Szczegóły</a>
                     </li>
-                    <li>
+                    <li sec:authorize="hasRole('ADMIN')">
                         <a th:href="${'treatments/edit/'+treatment.getId()}" class="list-actions-button-edit">Edytuj</a>
                     </li>
-                    <li>
+                    <li sec:authorize="hasRole('ADMIN')">
                         <a th:href="${'treatments/delete/'+treatment.getId()}" th:onclick="return confirm('Czy na pewno chcesz usunąć ten zabieg?')" class="list-actions-button-delete">Usuń</a>
                     </li>
                 </ul>
