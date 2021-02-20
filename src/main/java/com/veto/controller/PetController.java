@@ -32,6 +32,11 @@ public class PetController {
         this.repository = repository;
     }
 
+    @GetMapping("/index")
+    String index(){
+        return "pages/index";
+    }
+
     @GetMapping("/pets")
     String readAllVets(Model model){
         logger.warn("Exposing all the pets!");
